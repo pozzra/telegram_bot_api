@@ -1,12 +1,10 @@
-from flask import Flask
-import threading
-from .main import main as start_telegram_bot
+from flask import Flask, request
+# import threading  # Remove threading for Vercel compatibility
+from .main import gemini_text_response
 
 app = Flask(__name__)
 
-# Start the Telegram bot in a background thread when the Flask app starts
-bot_thread = threading.Thread(target=start_telegram_bot, daemon=True)
-bot_thread.start()
+# Do NOT start the Telegram bot in a thread here
 
 @app.route('/')
 def home():
@@ -15,3 +13,11 @@ def home():
 @app.route('/about')
 def about():
     return 'About'
+
+@app.route('/ai')
+def ai():
+    prompt = request.args.get('prompt', '')
+    if not prompt:
+        return 'Missing prompt', 400
+    response = gemini_text_response(prompt)
+    return response
