@@ -34,7 +34,7 @@ GEMINI_API_KEY = "AIzaSyBeDsq-53N0TWKr9XzPQmStEjpsWpnoRPQ" # Gemini API key
 genai.configure(api_key=GEMINI_API_KEY)
 # Using a specific model for code generation might be beneficial, but gemini-2.0-flash is also capable.
 # For better code generation, consider models like 'gemini-pro' if available for your use case and API key.
-model = genai.GenerativeModel('gemini-2.0-flash')
+model = genai.GeminiModel('gemini-1.5-pro-latest')
 
 # Directory to save voice files
 VOICE_DIR = 'voices'
