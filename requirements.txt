@@ -1,1 +1,8 @@
 Flask==3.0.3
+python-telegram-bot==22.2
+google-generativeai==0.8.5
+SpeechRecognition==3.14.3
+pydub==0.25.1
+PyPDF2==3.0.1
+requests==2.32.4
+pytz==2025.2
