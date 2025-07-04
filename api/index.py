@@ -1,6 +1,6 @@
 from flask import Flask
 import threading
-from main import main as start_telegram_bot
+from .main import main as start_telegram_bot
 
 app = Flask(__name__)
 
