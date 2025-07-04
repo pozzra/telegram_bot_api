@@ -878,6 +878,12 @@ def gemini_text_response(prompt: str) -> str:
         logger.error(f"Error in gemini_text_response: {e}", exc_info=True)
         return f"Error: {e}"
 
+async def ping(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    if update.message:
+        await update.message.reply_text("pong")
+
+application.add_handler(CommandHandler("ping", ping))
+
 if __name__ == "__main__":
     main()
     
