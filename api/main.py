@@ -37,11 +37,8 @@ genai.configure(api_key=GEMINI_API_KEY)
 model = genai.GenerativeModel('gemini-2.0-flash')
 
 # Directory to save voice files
-if not os.environ.get("VERCEL"):
-    VOICE_DIR = 'voices'
-    os.makedirs(VOICE_DIR, exist_ok=True)
-else:
-    VOICE_DIR = None  # Or handle differently
+VOICE_DIR = 'voices'
+os.makedirs(VOICE_DIR, exist_ok=True)
 
 # Import PyPDF2 for PDF text extraction
 import PyPDF2 # Changed: Import the main PyPDF2 module
@@ -872,14 +869,14 @@ async def generate_qrcode_command(update: Update, context: ContextTypes.DEFAULT_
             logger.error("update.message is None when trying to send QR code instruction text.")
 
 def gemini_text_response(prompt: str) -> str:
-    """
-    Given a text prompt, return a Gemini model response (for Flask web use).
-    """
-    # Configure Gemini model (move to function for web use)
-    genai.configure(api_key=GEMINI_API_KEY)
-    model = genai.GenerativeModel('gemini-2.0-flash')
-    response = model.generate_content(prompt)
-    return response.text
+    """Generate a Gemini AI response for a given prompt (for web/Flask use)."""
+    try:
+        chat_session = model.start_chat()
+        response = chat_session.send_message(prompt)
+        return response.text
+    except Exception as e:
+        logger.error(f"Error in gemini_text_response: {e}", exc_info=True)
+        return f"Error: {e}"
 
 if __name__ == "__main__":
     main()
